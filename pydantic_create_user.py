@@ -4,6 +4,9 @@ from pydantic import BaseModel, Field, EmailStr, ValidationError, constr
 
 
 class UserSchema(BaseModel):
+    """
+    Описание структуры модели данных пользователя.
+    """
     id: str = Field(default_factory=lambda: str(uuid.uuid4()))
     email: EmailStr
     last_name: str = Field(alias="lastName")
@@ -12,6 +15,9 @@ class UserSchema(BaseModel):
 
 
 class CreateUserRequestSchema(BaseModel):
+    """
+    Описание структуры модели данных пользователя в запросе на создание пользователя.
+    """
     email: EmailStr = get_random_email()
     password: constr(min_length=8)
     last_name: str = Field(alias="lastName")
@@ -20,6 +26,9 @@ class CreateUserRequestSchema(BaseModel):
 
 
 class CreateUserResponseSchema(BaseModel):
+    """
+    Описание структуры модели данных пользователя в ответе с данными созданного пользователя.
+    """
     user: UserSchema
 
 
