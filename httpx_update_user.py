@@ -1,9 +1,9 @@
 import httpx
-from tools.fakers import get_random_email, get_random_lastname, get_random_middlename, get_random_firstname
+from tools.fakers import fake
 
 create_user_payload = {
-    "email": get_random_email(),
-    "password": "string",
+    "email": fake.email(),
+    "password": fake.password(),
     "lastName": "string",
     "firstName": "string",
     "middleName": "string"
@@ -27,10 +27,10 @@ update_user_headers = {
 }
 
 update_user_payload = {
-    "email": get_random_email(),
-    "lastName": get_random_lastname(),
-    "firstName": get_random_firstname(),
-    "middleName": get_random_middlename()
+    "email": fake.email(),
+    "lastName": fake.last_name(),
+    "firstName": fake.first_name(),
+    "middleName": fake.middle_name()
 }
 
 update_user_response = httpx.patch(

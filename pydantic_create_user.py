@@ -1,5 +1,5 @@
 import uuid
-from tools.fakers import get_random_email
+from tools.fakers import fake
 from pydantic import BaseModel, Field, EmailStr, ValidationError, constr
 
 
@@ -18,7 +18,7 @@ class CreateUserRequestSchema(BaseModel):
     """
     Описание структуры модели данных пользователя в запросе на создание пользователя.
     """
-    email: EmailStr = get_random_email()
+    email: EmailStr = fake.email()
     password: constr(min_length=8)
     last_name: str = Field(alias="lastName")
     first_name: str = Field(alias="firstName")
