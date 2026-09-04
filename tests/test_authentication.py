@@ -1,4 +1,5 @@
 from http import HTTPStatus
+import pytest
 
 from clients.authentication.authentication_client import get_authentication_client
 from clients.authentication.authentication_schema import LoginRequestSchema, LoginResponseSchema
@@ -8,6 +9,8 @@ from tools.assertions.authentication import assert_login_response
 from tools.assertions.base import assert_status_code
 
 
+@pytest.mark.regression
+@pytest.mark.authentication
 def test_login() -> None:
     """
     Проверяет успешную аутентификацию пользователя.
