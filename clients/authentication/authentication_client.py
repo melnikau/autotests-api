@@ -5,7 +5,7 @@ from clients.public_http_builder import get_public_http_client
 from clients.authentication.authentication_schema import LoginRequestSchema, LoginResponseSchema, RefreshRequestSchema
 
 
-class AuthenticationClient(APIClient):
+class  AuthenticationClient(APIClient):
     """
     Клиент для работы с /api/v1/authentication
     """
