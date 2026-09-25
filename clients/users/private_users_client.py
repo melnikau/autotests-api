@@ -41,7 +41,7 @@ class PrivateUsersClient(APIClient):
         """
         return self.get(f"/api/v1/users/{user_id}")
 
-    def update_user_api(self, user_id: str, request:UpdateUserResponseSchema) -> Response:
+    def update_user_api(self, user_id: str, request: UpdateUserResponseSchema) -> Response:
         """
         Метод обновления пользователя по идентификатору.
 

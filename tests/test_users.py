@@ -1,16 +1,16 @@
 from clients.users.public_users_client import get_public_users_client, PublicUsersClient
-from clients.users.users_schema import CreateUserRequestSchema, CreateUserResponseSchema
+from clients.users.users_schema import CreateUserRequestSchema, CreateUserResponseSchema, GetUserResponseSchema
 from http import HTTPStatus
 import pytest
 
 from tools.assertions.base import assert_status_code
 from tools.assertions.schema import validate_json_schema
-from tools.assertions.users import assert_create_user_response
+from tools.assertions.users import assert_create_user_response, assert_get_user_response
+
 
 @pytest.mark.users
 @pytest.mark.regression
 def test_create_user(public_users_client: PublicUsersClient):
-
     request = CreateUserRequestSchema()
     response = public_users_client.create_user_api(request)
     response_data = CreateUserResponseSchema.model_validate_json(response.text)
@@ -19,3 +19,27 @@ def test_create_user(public_users_client: PublicUsersClient):
     assert_create_user_response(request, response_data)
 
     validate_json_schema(response.json(), response_data.model_json_schema())
+
+
+@pytest.mark.users
+@pytest.mark.regression
+def test_get_user_me(private_users_client, function_user):
+    """
+    Тест на получение данных текущего пользователя (GET /api/v1/users/me).
+    """
+
+    response = private_users_client.get_user_me_api()
+    response_data = response.json()
+
+    assert response.status_code == HTTPStatus.OK
+
+    validate_json_schema(
+        instance=response_data,
+        schema=GetUserResponseSchema.model_json_schema(),
+    )
+
+    get_user_response = GetUserResponseSchema.model_validate(response_data)
+    assert_get_user_response(
+        get_user_response=get_user_response,
+        create_user_response=function_user.response,
+    )
